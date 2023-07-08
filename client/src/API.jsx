@@ -53,7 +53,7 @@ async function getPosto(idAereo,posto) {
 }
 
 
-function addPrenotazione(idAereo, posto) {
+function addPrenotazione(idAereo, posti) {
     // call  POST /api/answers
     return new Promise((resolve, reject) => {
         fetch(URL+`/aerei/${idAereo}`, {
@@ -62,7 +62,7 @@ function addPrenotazione(idAereo, posto) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({idAereo: idAereo, posto: posto}),
+            body: JSON.stringify({idAereo: idAereo, posti: [...posti]}),
         }).then((response) => {
             if (response.ok) {
                 response.json()

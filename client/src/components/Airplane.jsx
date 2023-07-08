@@ -33,10 +33,8 @@ function Airplane(props) {
         const prenotaPosti = ()=>{
             props.postiSelezionati.forEach((e)=>{
                 if(e.nomeAereo==props.airplaneType.name) {
-                    e.posti.forEach((element)=>{
-                        API.addPrenotazione(props.airplaneType.id, element)
-                            .then(()=>{props.updatePostiOccupati()})
-                    })
+                    API.addPrenotazione(props.airplaneType.id, [...e.posti])
+                        .then(()=>{props.updatePostiOccupati()})
 
                 }
             })

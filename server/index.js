@@ -128,7 +128,7 @@ app.get('/api/aerei/:idAereo/posto/:posto', async (req, res) => {
 
 // POST /api/answers
 app.post('/api/aerei/:idAereo', isLoggedIn, [
-    check('posto').isString(),
+    check('posti').isArray()
 ], async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -141,33 +141,46 @@ app.post('/api/aerei/:idAereo', isLoggedIn, [
     else {
         const prenotazione = {
             idAereo: req.body.idAereo,
-            idUser: req.user.id,
-            posto: req.body.posto
+            idUser: req.user.id
         };
+        const posti = req.body.posti
+        let postoOccupato = false
 
         //console.log("answer to add: "+JSON.stringify(answer));
         try {
-            const postoPrenotato = await dao.getPostoPrenotato(prenotazione.posto, prenotazione.idAereo);
-            if(postoPrenotato[0]!=undefined) {
+            const postiOccupati = []
+            for (const e of posti) {
+                await dao.getPostoPrenotato(e, prenotazione.idAereo)
+                    .then((element)=>{if(element[0]!=undefined) {
+                        postoOccupato=true;
+                        postiOccupati.push(element[0])
+                    }})
+
+            }
+            if(postoOccupato) {
                 res.status(503).json({
-                    value: `${prenotazione.posto}`,
+                    value: postiOccupati,
                     error: ` Ban Database error during the creation of answer ${prenotazione.posto} by ${prenotazione.idUser}.`
                 });
             }
-            else {
-                try {
-                    const prenotazioneId = await dao.createPrenotazione(prenotazione);
-                    // Return the newly created id of the question to the caller.
-                    // A more complex object can also be returned (e.g., the original one with the newly created id)
-                    setTimeout(()=>res.status(201).json(prenotazioneId), answerDelay);
-                } catch (err) {
-                    console.log(err);
-                    res.status(503).json({ error: `Database error during the creation of answer ${prenotazione.posto} by ${prenotazione.idUser}.` });
-                }
-            }
         } catch (err) {
             console.log(err);
-            res.status(503).json({ error: `Database error during the creation of answer ${prenotazione.posto} by ${prenotazione.idUser}.` });
+            res.status(503).json({ error: `Database error during the creation of answer ${posti} by ${prenotazione.idUser}.` });
+        }
+        if(!postoOccupato) {
+            try {
+                const prenotazioneId = []
+                for (const e of posti) {
+                    const index = posti.indexOf(e);
+                    prenotazioneId[index] = await dao.createPrenotazione(prenotazione, e);
+                }
+                // Return the newly created id of the question to the caller.
+                // A more complex object can also be returned (e.g., the original one with the newly created id)
+                setTimeout(() => res.status(201).json(prenotazioneId), answerDelay);
+            } catch (err) {
+                console.log(err);
+                res.status(503).json({error: `Database error during the creation of answer ${posti} by ${prenotazione.idUser}.`});
+            }
         }
 
     }

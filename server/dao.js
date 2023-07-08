@@ -44,7 +44,7 @@ exports.getPostiOccupatiAereo = (id) => {
 
 exports.getPostoPrenotato = (posto, aereo) => {
     return new Promise((resolve, reject) => {
-        const sql = 'SELECT postiPrenotati.posto FROM postiPrenotati WHERE postiPrenotati.idAereo = ? AND postiPrenotati.posto = ?';
+        const sql = 'SELECT postiPrenotati.posto FROM postiPrenotati WHERE postiPrenotati.posto = ? AND postiPrenotati.idAereo = ?';
         db.all(sql, [posto, aereo], (err, rows) => {
             if (err) {
                 reject(err);
@@ -79,10 +79,10 @@ exports.getPrenotazioneAereo = (idAereo, idUser) => {
 
 
 // add a new answer
-exports.createPrenotazione = (prenotazione) => {
+exports.createPrenotazione = (prenotazione, posto) => {
     return new Promise((resolve, reject) => {
         const sql = 'INSERT INTO postiPrenotati(idAereo, idUser, posto) VALUES(?, ?, ?)';
-        db.run(sql, [prenotazione.idAereo, prenotazione.idUser, prenotazione.posto], function (err) {
+        db.run(sql, [prenotazione.idAereo, prenotazione.idUser, posto], function (err) {
             if (err) {
                 reject(err);
                 return;
