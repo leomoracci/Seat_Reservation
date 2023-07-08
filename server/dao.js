@@ -1,5 +1,4 @@
 'use strict';
-/* Data Access Object (DAO) module for accessing questions and answers */
 
 const sqlite = require('sqlite3');
 
@@ -23,7 +22,7 @@ exports.getAereiList = () => {
     });
 };
 
-// get i posti prenotati by {id}
+// get i posti prenotati by {id} = idAereo
 exports.getPostiOccupatiAereo = (id) => {
     return new Promise((resolve, reject) => {
         const sql = 'SELECT postiPrenotati.id,idAereo,idUser,posto FROM postiPrenotati WHERE postiPrenotati.idAereo = ?';
@@ -42,6 +41,7 @@ exports.getPostiOccupatiAereo = (id) => {
     });
 };
 
+// get singolo posto per verificare se è prenotato
 exports.getPostoPrenotato = (posto, aereo) => {
     return new Promise((resolve, reject) => {
         const sql = 'SELECT postiPrenotati.posto FROM postiPrenotati WHERE postiPrenotati.posto = ? AND postiPrenotati.idAereo = ?';
@@ -56,7 +56,7 @@ exports.getPostoPrenotato = (posto, aereo) => {
     });
 };
 
-// get all answers
+// get prenotazione di un utente su un dato aereo
 exports.getPrenotazioneAereo = (idAereo, idUser) => {
     return new Promise((resolve, reject) => {
         const sql = 'SELECT postiPrenotati.id,idAereo,idUser,posto FROM aerei JOIN postiPrenotati ON aerei.id = postiPrenotati.idAereo WHERE aerei.id = ? AND postiPrenotati.idUser = ?';
@@ -78,7 +78,7 @@ exports.getPrenotazioneAereo = (idAereo, idUser) => {
 };
 
 
-// add a new answer
+// add nuova prenotazione dell'utente su un dato aereo
 exports.createPrenotazione = (prenotazione, posto) => {
     return new Promise((resolve, reject) => {
         const sql = 'INSERT INTO postiPrenotati(idAereo, idUser, posto) VALUES(?, ?, ?)';
@@ -92,7 +92,7 @@ exports.createPrenotazione = (prenotazione, posto) => {
     });
 };
 
-// delete an existing answer
+// delete an existing prenotazione
 exports.deletePrenotazione = (idUser, isAereo) => {
     return new Promise((resolve, reject) => {
         const sql = 'DELETE FROM postiPrenotati WHERE idUser = ? AND idAereo = ?';  // Double-check that the answer belongs to the userId

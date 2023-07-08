@@ -126,8 +126,14 @@ function HomePage(props) {
                 setAirplaneType(aereiList[0])
                 API.getPostiOccupatiAereo(aereiList[0].id)
                     .then((pOccupati) => {
-                        setPostiOccupati(pOccupati);
-                        setLoaded(true)
+                        if (pOccupati=='empty'){
+                            setPostiOccupati([]);
+                            setLoaded(true)
+                        }
+                        else {
+                            setPostiOccupati(pOccupati);
+                            setLoaded(true)
+                        }
 
                     })
                     .catch((err) => {

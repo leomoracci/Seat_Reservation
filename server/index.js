@@ -99,7 +99,7 @@ app.get('/api/aerei/:id', async (req, res) => {
     }
 });
 
-// GET /api/aerei/<idAereo>/prenotazione/<idUser>
+// GET /api/aerei/<idAereo>
 app.get('/api/aerei/:idAereo', async (req, res) => {
     try {
         const result = await dao.getPrenotazioneAereo(req.params.idAereo, req.user.id);
@@ -113,6 +113,7 @@ app.get('/api/aerei/:idAereo', async (req, res) => {
     }
 });
 
+// GET /api/aerei/<idAereo>/posto/<idPosto>
 app.get('/api/aerei/:idAereo/posto/:posto', async (req, res) => {
     try {
         const result = await dao.getPostoPrenotato(req.params.idAereo, req.params.posto.toString());
@@ -126,7 +127,7 @@ app.get('/api/aerei/:idAereo/posto/:posto', async (req, res) => {
     }
 });
 
-// POST /api/answers
+// POST /api/aerei/<idAereo>
 app.post('/api/aerei/:idAereo', isLoggedIn, [
     check('posti').isArray()
 ], async (req, res) => {
@@ -146,7 +147,7 @@ app.post('/api/aerei/:idAereo', isLoggedIn, [
         const posti = req.body.posti
         let postoOccupato = false
 
-        //console.log("answer to add: "+JSON.stringify(answer));
+        //check se uno dei posti della prenotazione è gia stato occupato nel frattempo
         try {
             const postiOccupati = []
             for (const e of posti) {
@@ -167,6 +168,8 @@ app.post('/api/aerei/:idAereo', isLoggedIn, [
             console.log(err);
             res.status(503).json({ error: `Database error during the creation of answer ${posti} by ${prenotazione.idUser}.` });
         }
+
+        //inserisci la prenotazione nel db
         if(!postoOccupato) {
             try {
                 const prenotazioneId = []
@@ -187,7 +190,7 @@ app.post('/api/aerei/:idAereo', isLoggedIn, [
 });
 
 
-// DELETE /api/answers/<id>
+// DELETE /api/aerei/<idAereo>
 app.delete('/api/aerei/:idAereo', isLoggedIn, async (req, res) => {
     try {
         const numRowChanges = await dao.deletePrenotazione(req.user.id, req.params.idAereo); // It is WRONG to use something different from req.user.id
@@ -222,15 +225,6 @@ app.post('/api/sessions', function(req, res, next) {
         });
     })(req, res, next);
 });
-
-// ALTERNATIVE: if we are not interested in sending error messages...
-/*
-app.post('/api/sessions', passport.authenticate('local'), (req,res) => {
-  // If this function gets called, authentication was successful.
-  // `req.user` contains the authenticated user.
-  res.json(req.user);
-});
-*/
 
 // DELETE /sessions/current
 // logout

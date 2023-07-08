@@ -16,6 +16,7 @@ async function getAereiList() {
     }
 }
 
+//api pre ottenre i posti occupati di un aereo
 async function getPostiOccupatiAereo(id) {
     // call  /api/questions/<id>
     const response = await fetch(URL+`/aerei/${id}`);
@@ -30,6 +31,8 @@ async function getPostiOccupatiAereo(id) {
         throw postiOccupati;  // mi aspetto che sia un oggetto json fornito dal server che contiene l'errore
     }
 }
+
+//api pre ottenre i posti occupati di un aereo
 
 async function getPrenotazioneAereo(idAereo) {
     // call  /api/questions/<id>/answers
