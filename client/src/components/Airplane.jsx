@@ -216,8 +216,4 @@ function AirInfo(props){
     )
 }
 
-
-
-
-
 export default Airplane

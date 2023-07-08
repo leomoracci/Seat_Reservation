@@ -296,9 +296,4 @@ function Title(props){
     )
 }
 
-
-
-
-
-
 export {UtenteInfo, Title, Prenotazione, DettagliPrenotazione}
