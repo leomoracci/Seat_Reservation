@@ -14,6 +14,7 @@
 
 	-Description:
   	Crea una nuova sessione partendo dalle credenziali date
+
 	-Request body:
   	{
   		"username": "leo@test.com",
@@ -112,7 +113,7 @@ Le arrowfunction definite al suo interno gestiscono la prenotazione dei posti se
 
 ## Screenshot
 
-![Screenshot](./img/prenotazione_posti.png)
+![Screenshot](./img/prenotazioneposti.png)
 
 ## Users Credentials
 
