@@ -1,42 +1,26 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+#root{
+    @apply h-screen w-screen
 }
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.main{
+    height: 90%;
+    @apply flex gap-4 box-border border-8 p-4 border-t-4
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.card{
+    @apply shadow-md rounded-md shadow-gray-400 p-4 bg-white;
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.left{
+    width: 35%;
+    @apply h-full flex flex-col gap-4
 }
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.info{
+    height: 30%;
+    @apply w-full
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.body{
+    height: 70%;
+    @apply w-full
 }
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+.airplane{
+    width: 65%;
+    @apply h-full flex justify-center
 }

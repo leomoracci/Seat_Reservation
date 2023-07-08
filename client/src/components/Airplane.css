@@ -1,0 +1,38 @@
+.air-grid{
+    height: 100%;
+    @apply justify-evenly w-full flex flex-col gap-2 auto-rows-fr p-4;
+}
+.air{
+    @apply h-full w-full flex shadow-md shadow-gray-100 rounded-md gap-2;
+}
+.air-container{
+    @apply h-full w-2/3 flex flex-col box-border border-4 border-gray-300 p-1 shadow-md shadow-gray-100 rounded-md;
+}
+
+.seat-container{
+    @apply h-full w-full box-border border-4 gap-2 justify-center flex flex-col items-center rounded-md text-sm;
+}
+
+.row-container{
+    @apply h-full w-full gap-4 flex
+}
+
+
+.air-info{
+    @apply h-1/5 w-full flex flex-col gap-1 shadow-md shadow-gray-100 rounded-md items-start p-4;
+}
+.header{
+    height: 20%;
+}
+.air-parametri{
+    height: calc(80% - 0.25rem);
+    @apply flex flex-row items-center justify-between w-full;
+}
+.air-h-row{
+    height: 33%;
+    @apply flex items-center gap-2;
+}
+
+.air-left{
+    @apply flex flex-col h-full w-1/3
+}

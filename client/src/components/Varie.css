@@ -1,0 +1,36 @@
+
+.user-info{
+    @apply h-full w-full  shadow-md shadow-gray-100 rounded-md flex flex-col items-start;
+}
+.header{
+    height: 20%;
+}
+.user-parametri{
+    height: calc(80% - 0.25rem);
+    @apply flex items-center justify-between w-full;
+}
+.user-h-row{
+    height: 33%;
+    @apply flex items-center gap-4;
+}
+.prenotazione-container{
+    height: 66%;
+    @apply flex flex-col gap-4;
+}
+.input{
+    cursor: pointer
+}
+.pren-info{
+    @apply h-4/5 w-full flex flex-col gap-1 shadow-md shadow-gray-100 rounded-md p-4;
+}
+.pren-parametri{
+    height: calc(80% - 0.25rem);
+    @apply flex flex-row;
+}
+.pren-h-row{
+    height: 33%;
+    @apply flex items-center gap-2;
+}
+.header{
+    height: 20%;
+}
