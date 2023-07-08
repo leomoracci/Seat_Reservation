@@ -100,6 +100,7 @@ function HomePage(props) {
     const [loaded, setLoaded] = useState(false);
     const [postiOccupati, setPostiOccupati] = useState();
     const [airplaneType, setAirplaneType] = useState({});
+    const [postiInStandBy, setPostiInStandBy] = useState([])
     let postiSelezionati = [{nomeAereo : 'locale', posti:[]},{nomeAereo : 'regionale', posti:[]}, {nomeAereo : 'internazionale', posti:[]}];
     let prenotazione
 
@@ -166,6 +167,9 @@ function HomePage(props) {
     const pushPrenotazione = (pren) => {
         prenotazione = pren
     }
+    const updatePostiInStandBy = (p) => {
+        setPostiInStandBy(p)
+    }
 
     const cancellaPrenotazione = () => {
         if(prenotazione) {
@@ -186,7 +190,7 @@ function HomePage(props) {
                 </div>
             </div>
             <div className={"card airplane"}>
-               <Airplane updatePostiOccupati = {updatePostiOccupati} user = {props.user} prenotazione = {prenotazione} loggedIn={props.loggedIn} postiSelezionati = {postiSelezionati} loaded ={loaded} aereiList = {aerei} airplaneType = {airplaneType} changeAereo = {changeAereo} postiOccupati ={postiOccupati}></Airplane>
+               <Airplane setPostiInStandBy={updatePostiInStandBy} updatePostiOccupati = {updatePostiOccupati} user = {props.user} prenotazione = {prenotazione} loggedIn={props.loggedIn} postiSelezionati = {postiSelezionati} loaded ={loaded} aereiList = {aerei} airplaneType = {airplaneType} changeAereo = {changeAereo} postiOccupati ={postiOccupati} postiInStandBy = {[...postiInStandBy]}></Airplane>
             </div>
         </div>
     )

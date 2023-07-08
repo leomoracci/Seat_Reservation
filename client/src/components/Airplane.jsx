@@ -9,7 +9,7 @@ function Airplane(props) {
     if (props.loaded) {
         let postiTotali;
         let postiSelezionati=props.postiSelezionati
-
+        let postiInStandBy = props.postiInStandBy
         const updateSeatReservation = (id, nomeAereo) => {
             setDirty(!dirty)
             postiSelezionati.forEach((e)=>{
@@ -34,7 +34,20 @@ function Airplane(props) {
             props.postiSelezionati.forEach((e)=>{
                 if(e.nomeAereo==props.airplaneType.name) {
                     API.addPrenotazione(props.airplaneType.id, [...e.posti])
-                        .then(()=>{props.updatePostiOccupati()})
+                        .then(()=>{
+                            props.updatePostiOccupati()
+
+                        })
+                        .catch((element)=>{
+
+
+
+                            setTimeout(()=>{
+                                props.setPostiInStandBy([])
+                                props.updatePostiOccupati()
+                            },5000)
+                            props.setPostiInStandBy(element.value)
+                        })
 
                 }
             })
@@ -55,7 +68,7 @@ function Airplane(props) {
         const buildGrid = () => {
             let f = []
             for (let i = 0; i <= props.airplaneType.file; i++) {
-                f.push(<Row loggedIn={props.loggedIn} dirty = {dirty} postiSelezionati = {postiSelezionati} airplaneType={props.airplaneType} id={i + 1} key={i + 1} postiOccupati={props.postiOccupati} updateSeatReservation={updateSeatReservation}
+                f.push(<Row postiInStandBy = {postiInStandBy} loggedIn={props.loggedIn} dirty = {dirty} postiSelezionati = {postiSelezionati} airplaneType={props.airplaneType} id={i + 1} key={i + 1} postiOccupati={props.postiOccupati} updateSeatReservation={updateSeatReservation}
                             deleteSeatReservation={deleteSeatReservation} seats={props.airplaneType.posti}> </Row>)
             }
             return f
@@ -83,6 +96,41 @@ function Airplane(props) {
             </div>
         )
     }
+}
+function Row(props){
+    let alphabet = ["A","B","C","D","E","F"]
+
+    const generaPosti = () => {
+        let n =[];
+        for (let i = 0; i < props.seats; i++){
+            let state=0;
+            let s = ''
+            s+=props.id
+            s+=alphabet[i]
+            props.postiInStandBy.forEach((e)=>{
+                if(e.posto !=undefined) {
+                    if (e.posto == s) {
+
+                        state = 3
+                    }
+                }
+            })
+            props.postiOccupati.forEach((e)=>{
+                if(e.posto == s){
+                    state=1
+                }
+            })
+            n.push(<Seat loggedIn={props.loggedIn} dirty = {props.dirty} postiSelezionati = {props.postiSelezionati} airplaneType={props.airplaneType} initial_state={state} id = {(alphabet[i])} key = {(i+1)*props.id} updateSeatReservation={props.updateSeatReservation} deleteSeatReservation={props.deleteSeatReservation} rowId = {props.id}></Seat>)
+
+        }
+        return n
+    }
+
+    return(
+        <div className="row-container" id = {props.id}>
+            {generaPosti()}
+        </div>
+    )
 }
 function Seat(props) {
     let initial_state = props.initial_state
@@ -121,39 +169,13 @@ function Seat(props) {
 
     return (
         <div onClick={()=>{swapSeatState()}}
-             className={'seat-container ' + (props.loggedIn === true? 'cursor-pointer ':' ') + (initial_state === 0 ? 'border-green-500 ': initial_state === 1 ? 'border-red-500 ' : ' ') + (stato === 2 ? ' border-yellow-500' : '')}>
+             className={'seat-container ' + (props.loggedIn === true? 'cursor-pointer ':' ') + (initial_state === 0 ? 'border-green-500 ': initial_state === 1 ? 'border-red-500 ' : 'border-gray-500') + (stato === 2 ? ' border-yellow-500' : '')}>
             {props.rowId}{props.id}
         </div>
     )
 }
 
-function Row(props){
-    let alphabet = ["A","B","C","D","E","F"]
 
-    const generaPosti = () => {
-        let n =[];
-        for (let i = 0; i < props.seats; i++){
-            let state=0;
-            let s = ''
-            s+=props.id
-            s+=alphabet[i]
-            props.postiOccupati.forEach((e)=>{
-                if(e.posto == s){
-                    state=1
-                }
-            })
-            n.push(<Seat loggedIn={props.loggedIn} dirty = {props.dirty} postiSelezionati = {props.postiSelezionati} airplaneType={props.airplaneType} initial_state={state} id = {(alphabet[i])} key = {(i+1)*props.id} updateSeatReservation={props.updateSeatReservation} deleteSeatReservation={props.deleteSeatReservation} rowId = {props.id}></Seat>)
-
-        }
-        return n
-    }
-
-    return(
-        <div className="row-container" id = {props.id}>
-            {generaPosti()}
-        </div>
-    )
-}
 function AirInfo(props){
     let postiSelezionatiAereo = 0
     props.postiSelezionati.forEach((e)=>{
