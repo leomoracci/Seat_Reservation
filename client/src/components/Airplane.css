@@ -19,7 +19,7 @@
 
 
 .air-info{
-    @apply h-1/5 w-full flex flex-col gap-1 shadow-md shadow-gray-100 rounded-md items-start p-4;
+    @apply h-2/6 w-full flex flex-col gap-1 shadow-md shadow-gray-100 rounded-md items-start p-4;
 }
 .header{
     height: 20%;

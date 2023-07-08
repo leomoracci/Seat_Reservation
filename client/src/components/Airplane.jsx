@@ -30,6 +30,7 @@ function Airplane(props) {
             })
         }
 
+
         const prenotaPosti = ()=>{
             props.postiSelezionati.forEach((e)=>{
                 if(e.nomeAereo==props.airplaneType.name) {
@@ -192,6 +193,10 @@ function AirInfo(props){
             </div>
             <div className=" air-parametri">
                 <div className="flex flex-col h-full my-auto">
+                    <div className="air-h-row">
+                        <div className="text-xl font-serif text-gray-400">Tipo Aereo:</div>
+                        <div className="text-xl font-serif text-gray-700">{props.airplaneType.name}</div>
+                    </div>
                     <div className="air-h-row">
                         <div className="text-xl font-serif text-gray-400">Posti Totali:</div>
                         <div className="text-xl font-serif text-gray-700">{props.postiTotali}</div>

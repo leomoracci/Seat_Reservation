@@ -73,6 +73,11 @@ function Prenotazione(props){
         props.changeAereo(aereo)
     }
 
+    const deletePrenotazione = () =>{
+        props.updateSeatReservation([], props.airplaneType.name)
+
+    }
+
     function checkPrenotazione(){
         props.postiOccupati.forEach((element)=>{
             if(element.idUser == props.user.id) {
@@ -114,30 +119,37 @@ function Prenotazione(props){
         if (props.loggedIn) {
             checkPrenotazione()
             if (props.loggedIn && !prenotazione) {
-                return <>
-                    <div className="user-h-row">
-                        <div className="text-xl font-serif text-gray-400">Posti Selezionati:</div>
-                        <div className="text-xl text-gray-700">{buildStringPostiSelezionati()}</div>
-                    </div>
-                    <div className="user-h-row">
-                        <div className="text-xl font-serif text-gray-400">Seleziona Posti Casuali:</div>
-                        <form className="flex gap-5 items-center" onSubmit={handleSubmit}>
-                            <input
-                                className="text-xl font-sans resize-none max-h-8 w-1/6 rounded-md border border-gray-400"
-                                type="number" defaultValue={0}
-                                onChange={() => postiRandomSelezionati = event.target.value}/>
-                            <input
-                                className="input rounded-full border-8 border-blue-500 hover:shadow-xl shadow-blue-500 text-xl font-serif p-4"
-                                type="submit" value="Genera"/>
+                return <div className='h-full w-full'>
+                            <div className="user-h-row">
+                                <div className="text-xl font-serif text-gray-400">Posti Selezionati:</div>
+                                <div className="text-xl text-gray-700">{buildStringPostiSelezionati()}</div>
+                            </div>
+                            <div className="flex items-center gap-10">
+                                <div className="text-xl font-serif text-gray-400">Seleziona Posti Casuali:</div>
+                                <form className="flex gap-5 items-center" onSubmit={handleSubmit}>
+                                    <input
+                                        className="text-xl font-sans resize-none max-h-8 w-1/6 rounded-md border border-gray-400"
+                                        type="number" defaultValue={0}
+                                        onChange={() => postiRandomSelezionati = event.target.value}/>
+                                    <input
+                                        className="input rounded-full border-4 border-yellow-500 hover:bg-yellow-200 hover:shadow-xl shadow-blue-500 text-xl font-serif p-4"
+                                        type="submit" value="Genera"/>
 
-                        </form>
-                    </div>
-                    <div className="user-h-row">
-                        <button
-                            className="text-2xl font-sans h-full w-full rounded-full border-8 border-blue-500 hover:shadow-xl shadow-blue-500" onClick={props.prenotaPosti}> Prenota
-                        </button>
-                    </div>
-                </>;
+                                </form>
+                            </div>
+                            <div className="h-1/2 flex items-center gap-4 ">
+                                <div className="w-1/3 h-1/2">
+                                    <button
+                                        className="font-sans h-full w-full rounded-full border-4 border-red-500 hover:bg-red-200 hover:shadow-xl shadow-red-500" onClick={deletePrenotazione}> Rimuovi posti selezionati
+                                    </button>
+                                </div>
+                                <div className="w-2/3 h-1/2">
+                                    <button
+                                        className="text-2xl font-sans h-full w-full rounded-full border-4 border-blue-500 hover:bg-blue-200 hover:shadow-xl shadow-blue-500" onClick={props.prenotaPosti}> Prenota
+                                    </button>
+                                </div>
+                            </div>
+                        </div>;
             }
         }
         return <></>;
@@ -166,10 +178,10 @@ function Prenotazione(props){
                 <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="M4.058 5.284c1.3.313 14.092 3.764 19.2 5.128.447.131.703.484.738.877.009.1 0 .198-.019.298-.863 3.579-1.906 7.115-2.86 10.673-.133.45-.49.702-.878.736-.101.01-.198.002-.298-.017-6.439-1.551-12.8-3.418-19.199-5.128-.456-.134-.704-.492-.738-.877-.009-.1 0-.199.018-.297.864-3.581 1.907-7.117 2.86-10.674.157-.525.631-.82 1.176-.719m-1.832 10.893l17.216 4.601 2.331-8.692c-4.785-1.279-17.215-4.599-17.215-4.599-.778 2.896-1.555 5.794-2.332 8.69m16.148 3.479l.258-.963-2.717-.717-.259.965 2.718.715zm-5.019-1.325l.966.262.444-1.658-.965-.262-.445 1.658zm5.708-1.328l.259-.965-2.718-.717-.26.965 2.719.717zm-12.949-3.539l2.176-.869-2-2 .689-.276 3.381 1.448 1.725-.689c.456-.185 1.173-.068 1.311.276l.023.18c-.028.338-.403.77-.782.924l-1.725.688-1.449 3.379-.691.275.07-2.827-2.177.869-.514 1.006-.484.192-.037-1.585-1.065-1.172.482-.193 1.067.374zm7.945 2.242l.966.262.503-1.875-.967-.261-.502 1.874zm5.449-.434l.259-.966-2.719-.716-.258.965 2.718.717zm.465-1.768l.259-.965-2.718-.717-.259.966 2.718.716zm-5.153-.638l.967.261.444-1.658-.966-.261-.445 1.658zm-7.641-8.495c4.259-1.125 8.533-2.2 12.788-3.337.143-.035.208-.035.299-.034.427.028.765.27.912.691.678 2.297 1.28 4.614 1.88 6.931l-2.256-.604-1.283-4.794-8.318 2.223-4.022-1.076z"/></svg>                <div className=" text-2xl italic">Prenotazione</div>
             </div>
             <div className="user-parametri">
-                <div className="flex flex-col h-full my-auto">
-                    <div className="user-h-row">
+                <div className="flex flex-col w-full h-full p-4 my-auto">
+                    <div className="prenotazione-1">
                         <div className="text-xl font-serif text-gray-400">Seleziona Aereo:</div>
-                        <select defaultValue={props.airplaneType} className='cursor-pointer' onChange={handleChange} >
+                        <select defaultValue={props.airplaneType} className='cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' onChange={handleChange} >
                             <option value={JSON.stringify(props.aerei[0])}>{props.aerei[0].name}</option>
                             <option value={JSON.stringify(props.aerei[1])}>{props.aerei[1].name}</option>
                             <option value={JSON.stringify(props.aerei[2])}>{props.aerei[2].name}</option>
@@ -198,6 +210,17 @@ function DettagliPrenotazione(props){
         })
     }
 
+    function showButton() {
+        if (numPostiOccupati == 0) {
+            return <div></div>
+        } else {
+            return (<button
+                className={"font-sans h-full w-full rounded-full border-4 border-red-500 shadow-red-500 hover:shadow-xl hover:bg-red-200 "}
+                onClick={props.cancellaPrenotazione}> Cancella Prenotazione
+            </button>)
+        }
+    }
+
 
     function checkLog() {
         if (props.loggedIn && props.loaded) {
@@ -208,7 +231,7 @@ function DettagliPrenotazione(props){
                     <div className=" text-2xl italic">Dettagli Prenotazione</div>
                 </div>
                 <div className="pren-parametri">
-                    <div className="flex flex-col h-full my-auto">
+                    <div className="flex flex-col h-full my-auto w-full">
                         <div className="pren-h-row">
                             <div className="text-xl font-serif text-gray-400">Numero Posti:</div>
                             <div className="text-xl font-sans text-gray-700">{numPostiOccupati}</div>
@@ -217,10 +240,8 @@ function DettagliPrenotazione(props){
                             <div className="text-xl font-serif text-gray-400">ID Posti:</div>
                             <div className="text-xl text-gray-700">{idPosti}</div>
                         </div>
-                        <div className="pren-h-row">
-                            <button
-                                className="text-2xl font-sans h-full w-full rounded-full border-8 border-blue-500 hover:shadow-xl shadow-blue-500" onClick={props.cancellaPrenotazione}> Cancella Prenotazione
-                            </button>
+                        <div className="flex items-center gap-2 h-1/4 w-2/5">
+                            {showButton()}
                         </div>
                     </div>
                 </div>
@@ -249,12 +270,12 @@ function Title(props){
                 </div>
             </div>
             <div className="h-full w-1/12">
-                {props.loggedIn? <button className="text-2xl font-sans h-full w-full rounded-full border-8 border-blue-500 hover:shadow-xl shadow-blue-500" onClick={()=>{
+                {props.loggedIn? <button className="text-2xl font-sans h-full w-full rounded-full border-8 border-blue-500 hover:bg-blue-200 hover:shadow-xl shadow-blue-500" onClick={()=>{
                         props.doLogOut();
                     }
                     }>Logout</button>:
                     props.logging? <div></div>:
-                    <button className="text-2xl font-sans h-full w-full rounded-full border-8 border-blue-500 hover:shadow-xl shadow-blue-500" onClick={()=>{
+                    <button className="text-2xl font-sans h-full w-full rounded-full border-8 border-blue-500 hover:shadow-xl hover:bg-blue-200 shadow-blue-500" onClick={()=>{
                         props.removeLoginButton();
                         navigate('/login');
                     }

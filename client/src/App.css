@@ -9,18 +9,18 @@
     @apply shadow-md rounded-md shadow-gray-400 p-4 bg-white;
 }
 .left{
-    width: 35%;
+    width: 30%;
     @apply h-full flex flex-col gap-4
 }
 .info{
-    height: 30%;
+    height: 40%;
     @apply w-full
 }
 .body{
-    height: 70%;
+    height: 60%;
     @apply w-full
 }
 .airplane{
-    width: 65%;
+    width: 70%;
     @apply h-full flex justify-center
 }
