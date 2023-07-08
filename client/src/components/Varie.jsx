@@ -77,6 +77,14 @@ function Prenotazione(props){
         props.updateSeatReservation([], props.airplaneType.name)
 
     }
+    const checkAlert = () =>{
+        if(props.myAlert){
+            return 'Prenotazione annullata perchè i posti evidenziati in grigio sono occupati'
+        }
+        else {
+            return ''
+        }
+    }
 
     function checkPrenotazione(){
         props.postiOccupati.forEach((element)=>{
@@ -179,13 +187,16 @@ function Prenotazione(props){
             </div>
             <div className="user-parametri">
                 <div className="flex flex-col w-full h-full p-4 my-auto">
-                    <div className="prenotazione-1">
-                        <div className="text-xl font-serif text-gray-400">Seleziona Aereo:</div>
-                        <select defaultValue={props.airplaneType} className='cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' onChange={handleChange} >
-                            <option value={JSON.stringify(props.aerei[0])}>{props.aerei[0].name}</option>
-                            <option value={JSON.stringify(props.aerei[1])}>{props.aerei[1].name}</option>
-                            <option value={JSON.stringify(props.aerei[2])}>{props.aerei[2].name}</option>
-                        </select>
+                    <div className='h-1/3'>
+                        <div className='alert'>{checkAlert()}</div>
+                        <div className="prenotazione-1">
+                            <div className="text-xl font-serif text-gray-400">Seleziona Aereo:</div>
+                            <select defaultValue={props.airplaneType} className='cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' onChange={handleChange} >
+                                <option value={JSON.stringify(props.aerei[0])}>{props.aerei[0].name}</option>
+                                <option value={JSON.stringify(props.aerei[1])}>{props.aerei[1].name}</option>
+                                <option value={JSON.stringify(props.aerei[2])}>{props.aerei[2].name}</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div className="prenotazione-container">

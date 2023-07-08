@@ -14,8 +14,12 @@
     @apply flex items-center gap-4;
 }
 .prenotazione-1{
-    height: 33%;
+    height: 80%;
     @apply flex items-center justify-around w-full;
+}
+.alert{
+    height: 20%;
+    @apply flex items-center w-full text-red-500;
 }
 .prenotazione-container{
     height: 66%;

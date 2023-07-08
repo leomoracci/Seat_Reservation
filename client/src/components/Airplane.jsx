@@ -6,6 +6,7 @@ import API from "../API.jsx";
 
 function Airplane(props) {
     const [dirty, setDirty] = useState(false);
+    const [myAlert, setMyAlert] = useState(false);
     if (props.loaded) {
         let postiTotali;
         let postiSelezionati=props.postiSelezionati
@@ -40,14 +41,13 @@ function Airplane(props) {
 
                         })
                         .catch((element)=>{
-
-
-
                             setTimeout(()=>{
                                 props.setPostiInStandBy([])
                                 props.updatePostiOccupati()
+                                setMyAlert(false)
                             },5000)
                             props.setPostiInStandBy(element.value)
+                            setMyAlert(true)
                         })
 
                 }
@@ -86,11 +86,11 @@ function Airplane(props) {
                         airplaneType = {props.airplaneType}
                     >
                     </AirInfo>
-                    <Prenotazione prenotaPosti = {prenotaPosti} user ={props.user} updateSeatReservation = {updateSeatReservationRandom} postiTotali = {postiTotali} postiOccupati={props.postiOccupati} loggedIn={props.loggedIn} dirty={dirty} aerei={props.aereiList} airplaneType={props.airplaneType}
+                    <Prenotazione myAlert = {myAlert} prenotaPosti = {prenotaPosti} user ={props.user} updateSeatReservation = {updateSeatReservationRandom} postiTotali = {postiTotali} postiOccupati={props.postiOccupati} loggedIn={props.loggedIn} dirty={dirty} aerei={props.aereiList} airplaneType={props.airplaneType}
                                   postiSelezionati={postiSelezionati} changeAereo={props.changeAereo}></Prenotazione>
                 </div>
                 <div className="air-container">
-                    <div className="air-grid">
+                    <div className="air-grid overflow-auto">
                         {buildGrid()}
                     </div>
                 </div>

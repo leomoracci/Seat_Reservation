@@ -140,7 +140,7 @@ function HomePage(props) {
                         handleError(err)})
             })
             .catch((err) => handleError(err));
-    }, []);
+    }, [props.loggedIn]);
     const changeAereo = (e) =>{
 
         setAirplaneType(e)
