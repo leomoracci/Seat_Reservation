@@ -105,7 +105,7 @@ function Prenotazione(props){
         e.preventDefault()
         let count = posti;
         let push=true
-        while ((!push || postiSel.length<postiRandomSelezionati) && count<props.postiTotali){
+        while ((!push || postiSel.length<postiRandomSelezionati) && count-posti<props.postiTotali){
             let s=''
             push=true
             s=Math.floor(count/posti)
@@ -129,8 +129,8 @@ function Prenotazione(props){
             if (props.loggedIn && !prenotazione) {
                 return <div className='h-full w-full'>
                             <div className="user-h-row">
-                                <div className="text-xl font-serif text-gray-400">Posti Selezionati:</div>
-                                <div className="text-xl text-gray-700">{buildStringPostiSelezionati()}</div>
+                                <div className="text-xl font-serif h-1/2 text-gray-400">Posti Selezionati:</div>
+                                <div className="text-xl text-gray-700 h-1/2 overflow-auto">{buildStringPostiSelezionati()}</div>
                             </div>
                             <div className="flex items-center gap-10">
                                 <div className="text-xl font-serif text-gray-400">Seleziona Posti Casuali:</div>
@@ -244,12 +244,12 @@ function DettagliPrenotazione(props){
                 <div className="pren-parametri">
                     <div className="flex flex-col h-full my-auto w-full">
                         <div className="pren-h-row">
-                            <div className="text-xl font-serif text-gray-400">Numero Posti:</div>
-                            <div className="text-xl font-sans text-gray-700">{numPostiOccupati}</div>
+                            <div className="text-xl h-1/2 font-serif text-gray-400">Numero Posti:</div>
+                            <div className="text-xl h-1/2 font-sans text-gray-700">{numPostiOccupati}</div>
                         </div>
                         <div className="pren-h-row">
-                            <div className="text-xl font-serif text-gray-400">ID Posti:</div>
-                            <div className="text-xl text-gray-700">{idPosti}</div>
+                            <div className="text-xl font-serif h-1/2 text-gray-400">ID Posti:</div>
+                            <div className="text-xl text-gray-700 h-1/2 overflow-auto">{idPosti}</div>
                         </div>
                         <div className="flex items-center gap-2 h-1/4 w-2/5">
                             {showButton()}

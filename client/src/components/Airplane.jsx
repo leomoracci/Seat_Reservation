@@ -68,7 +68,7 @@ function Airplane(props) {
         postiTotali = props.airplaneType.file * props.airplaneType.posti;
         const buildGrid = () => {
             let f = []
-            for (let i = 0; i <= props.airplaneType.file; i++) {
+            for (let i = 0; i < props.airplaneType.file; i++) {
                 f.push(<Row postiInStandBy = {postiInStandBy} loggedIn={props.loggedIn} dirty = {dirty} postiSelezionati = {postiSelezionati} airplaneType={props.airplaneType} id={i + 1} key={i + 1} postiOccupati={props.postiOccupati} updateSeatReservation={updateSeatReservation}
                             deleteSeatReservation={deleteSeatReservation} seats={props.airplaneType.posti}> </Row>)
             }
