@@ -7,12 +7,10 @@ import {UtenteInfo, Title, DettagliPrenotazione} from "./components/Varie.jsx";
 import {LoginForm} from "./components/LoginForm.jsx";
 import API from "./API.jsx";
 function App() {
-
     return (
     <BrowserRouter>
         <Main/>
     </BrowserRouter>
-
   )
 }
 
@@ -24,6 +22,7 @@ function Main(){
     const [user, setUser] = useState(undefined);
 
 
+    //check se c'è già una sessione autenticata all'avvio, altrimenti ritorna un errore
     useEffect(()=> {
         const checkAuth = async() => {
             try {
@@ -114,7 +113,6 @@ function HomePage(props) {
         } else if (err.error) {
             errMsg = err.error;
         }
-
         setErrorMsg(errMsg);
         setTimeout(()=>props.putDirtyOn(), 2000);  // Fetch correct version from server, after a while
     }

@@ -16,7 +16,7 @@ async function getAereiList() {
     }
 }
 
-//api pre ottenre i posti occupati di un aereo
+//api per ottenere i posti occupati di un aereo
 async function getPostiOccupatiAereo(id) {
     // call  /api/questions/<id>
     const response = await fetch(URL+`/aerei/${id}`);
@@ -32,8 +32,8 @@ async function getPostiOccupatiAereo(id) {
     }
 }
 
-//api pre ottenre i posti occupati di un aereo
-
+//api per ottenre i posti occupati di un aereo da uno specifico utente
+/*
 async function getPrenotazioneAereo(idAereo) {
     // call  /api/questions/<id>/answers
     const response = await fetch(URL+`/aerei/${idAereo}`);
@@ -44,6 +44,10 @@ async function getPrenotazioneAereo(idAereo) {
         throw prenotazione;  // mi aspetto che sia un oggetto json fornito dal server che contiene l'errore
     }
 }
+
+
+
+//api per ottenere un posto specificando l'id dell'aereo
 async function getPosto(idAereo,posto) {
     // call  /api/questions/<id>/answers
     const response = await fetch(URL+`/aerei/${idAereo}/posto/${posto}`);
@@ -55,6 +59,8 @@ async function getPosto(idAereo,posto) {
     }
 }
 
+
+ */
 
 function addPrenotazione(idAereo, posti) {
     // call  POST /api/answers
@@ -101,7 +107,7 @@ function deletePrenotazione(idAereo) {
 }
 
 
-
+// api per il login
 async function logIn(credentials) {
     let response = await fetch(URL + '/sessions', {
         method: 'POST',
@@ -120,6 +126,7 @@ async function logIn(credentials) {
     }
 }
 
+//api per il logout
 async function logOut() {
     await fetch(URL+'/sessions/current', {
         method: 'DELETE',
@@ -127,6 +134,7 @@ async function logOut() {
     });
 }
 
+//api per ottenere le info dell'utente autenticato
 async function getUserInfo() {
     const response = await fetch(URL+'/sessions/current', {
         credentials: 'include'
@@ -139,10 +147,8 @@ async function getUserInfo() {
     }
 }
 
-
-
 const API = {
-    getAereiList, getPostiOccupatiAereo, getPrenotazioneAereo, addPrenotazione, deletePrenotazione, getPosto,
+    getAereiList, getPostiOccupatiAereo, addPrenotazione, deletePrenotazione,
     logIn, logOut, getUserInfo
 };
 export default API;

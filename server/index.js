@@ -52,7 +52,7 @@ const corsOptions = {
     origin: 'http://localhost:5173',
     credentials: true,
 };
-app.use(cors(corsOptions)); // NB: Usare solo per sviluppo e per l'esame! Altrimenti indicare dominio e porta corretti
+app.use(cors(corsOptions));
 
 const answerDelay = 300;
 
@@ -147,7 +147,7 @@ app.post('/api/aerei/:idAereo', isLoggedIn, [
         const posti = req.body.posti
         let postoOccupato = false
 
-        //check se uno dei posti della prenotazione è gia stato occupato nel frattempo
+        //check se uno dei posti della prenotazione è gia stato occupato nel frattempo da un altro utente loggato
         try {
             const postiOccupati = []
             for (const e of posti) {
@@ -169,16 +169,17 @@ app.post('/api/aerei/:idAereo', isLoggedIn, [
             res.status(503).json({ error: `Database error during the creation of answer ${posti} by ${prenotazione.idUser}.` });
         }
 
-        //inserisci la prenotazione nel db
+        //inserisci la prenotazione nel db se i posti sono tutti liberi
         if(!postoOccupato) {
             try {
                 const prenotazioneId = []
+
+                //esegue il dato metodo del dao una volta per ogni posto della prenotazione
                 for (const e of posti) {
                     const index = posti.indexOf(e);
                     prenotazioneId[index] = await dao.createPrenotazione(prenotazione, e);
                 }
-                // Return the newly created id of the question to the caller.
-                // A more complex object can also be returned (e.g., the original one with the newly created id)
+                // Ritorna l'id dei posti della prenotazione se andata a buon fine
                 setTimeout(() => res.status(201).json(prenotazioneId), answerDelay);
             } catch (err) {
                 console.log(err);
